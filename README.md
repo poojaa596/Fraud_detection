@@ -1,4 +1,12 @@
-# 🚨 **Fraud Detection System** 🔍
+## 🚨 **Fraud Detection System** 🔍 
+## 📄 Project Details
+- **Name:** POOJA A
+- **Company:** CODTECH IT SOLUTIONS
+- **ID:** CT12DS2550
+- **Domain:** DATA ANALYTICS
+- **Duration:** SEPTEMBER 25th, 2024 to NOVEMBER 25th, 2024
+
+
 
 **Unmask financial fraud with the power of Machine Learning!**  
 This project leverages cutting-edge algorithms like **Isolation Forest**, **Local Outlier Factor**, and **Deep Learning** to identify fraudulent transactions in financial datasets. Let's make digital payments safer and smarter! 💳
