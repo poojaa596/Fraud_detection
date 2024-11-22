@@ -7,7 +7,7 @@
 - **Duration:** SEPTEMBER 25th, 2024 to NOVEMBER 25th, 2024
 
 
-
+### 🚀 Introduction 
 **Unmask financial fraud with the power of Machine Learning!**  
 This project leverages cutting-edge algorithms like **Isolation Forest**, **Local Outlier Factor**, and **Deep Learning** to identify fraudulent transactions in financial datasets. Let's make digital payments safer and smarter! 💳
 
@@ -60,16 +60,15 @@ We used the **Credit Card Fraud Detection Dataset** from [Kaggle](https://www.ka
 ### 3. Deep Learning (ANN) 🧬
 - A neural network with fully connected layers for classification.
 - **Strengths**: High accuracy for complex datasets.
-## 📊 **Results Visualization**
-
- ##Performance Metrics
-
+### Tabulated Results 🎯
+ Performance Metrics
+Results may vary based on dataset preprocessing and hyperparameter tuning.
 | **Model**              | **Accuracy** | **Precision** | **Recall** | **ROC-AUC** |
 |-------------------------|--------------|---------------|------------|-------------|
 | Isolation Forest        | 98%          | 30%           | 70%        | 87%         |
 | Local Outlier Factor    | 97%          | 25%           | 65%        | 84%         |
 | Deep Learning (ANN)     | 99.9%        | 93%           | 92%        | 99.5%       |
-##
+## 📊 **Results Visualization**
 ![download](https://github.com/user-attachments/assets/a27d7d7c-89b3-4af6-ba5f-cfbdabc0ac2b)
 ![download](https://github.com/user-attachments/assets/bacf597c-8842-414c-ba1e-85f49f2709e6)
 ![download](https://github.com/user-attachments/assets/adf2de41-acd3-434a-83ac-7c7d30d792ec)
