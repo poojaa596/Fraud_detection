@@ -1,0 +1,86 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.ensemble import IsolationForest
+from sklearn.neighbors import LocalOutlierFactor
+from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_auc_score
+from tensorflow.keras import Input
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
+# Load data (replace with your file path)
+data = pd.read_csv('creditcard.csv')
+# Check the first few rows of the data
+print(data.head())
+
+# Prepare features and labels (assumed 'Class' column is the label for fraud detection)
+X = data.drop('Class', axis=1)
+y = data['Class']
+
+
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+# Scale the features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+X_test = scaler.transform(X_test)
+# --- Isolation Forest ---
+iforest = IsolationForest(n_estimators=100, contamination=0.1)
+y_pred_iforest = iforest.fit_predict(X_test)
+y_pred_iforest = [1 if pred == -1 else 0 for pred in y_pred_iforest]  # Convert to binary (fraud = 1)
+
+# --- Local Outlier Factor (LOF) ---
+lof = LocalOutlierFactor(n_neighbors=20, contamination=0.1)
+y_pred_lof = lof.fit_predict(X_test)
+y_pred_lof = [1 if pred == -1 else 0 for pred in y_pred_lof]  # Convert to binary (fraud = 1)
+
+# --- Neural Network (Deep Learning Model) ---
+model = Sequential([
+    Input(shape=(X_train.shape[1],)),  # Define input shape here
+    Dense(128, activation='relu'),
+    Dense(64, activation='relu'),
+    Dense(1, activation='sigmoid')  # Sigmoid for binary classification
+])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.fit(X_train, y_train, epochs=10, batch_size=32, verbose=1)
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"Deep Learning Model Accuracy: {accuracy*100:.2f}%")
+y_pred_nn = (model.predict(X_test) > 0.5).astype(int)  # Convert probabilities to binary
+y_pred_dl = (model.predict(X_test) > 0.5).astype("int32")
+
+# Print evaluation metrics for Deep Learning Model
+print("Deep Learning Classification Report:")
+print(classification_report(y_test, y_pred_dl))
+print("Deep Learning Confusion Matrix:")
+print(confusion_matrix(y_test, y_pred_dl))
+print("Deep Learning ROC AUC Score:")
+print(roc_auc_score(y_test, y_pred_dl))
+
+# --- Plot Confusion Matrices ---
+def plot_confusion_matrix(conf_matrix, model_name):
+    plt.figure(figsize=(6,6))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=['Non-Fraud', 'Fraud'], yticklabels=['Non-Fraud', 'Fraud'])
+    plt.title(f"Confusion Matrix for {model_name}")
+    plt.xlabel('Predicted Labels')
+    plt.ylabel('True Labels')
+    plt.show()
+
+# Plot confusion matrices for each model
+plot_confusion_matrix(confusion_matrix(y_test, y_pred_iforest), 'Isolation Forest')
+plot_confusion_matrix(confusion_matrix(y_test, y_pred_lof), 'Local Outlier Factor')
+plot_confusion_matrix(confusion_matrix(y_test, y_pred_nn), 'Neural Network')
+
+# --- Evaluation ---
+print("Isolation Forest Classification Report:")
+print(classification_report(y_test, y_pred_iforest))
+print("Local Outlier Factor Classification Report:")
+print(classification_report(y_test, y_pred_lof))
+print("Neural Network Classification Report:")
+print(classification_report(y_test, y_pred_nn))
