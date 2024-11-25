@@ -1,5 +1,6 @@
 # Import necessary libraries
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import IsolationForest
@@ -19,17 +20,17 @@ data = pd.read_csv('creditcard.csv')
 print(data.head())
 
 # Prepare features and labels (assumed 'Class' column is the label for fraud detection)
-X = data.drop('Class', axis=1)
+X = data.drop('Class', axis=1)  # Assuming 'Class' is the target column
 y = data['Class']
 
+# Split the data into training and testing sets before scaling
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 # Scale the features
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-X_test = scaler.transform(X_test)
+X_train_scaled = scaler.fit_transform(X_train)  # Fit scaler on training data
+X_test_scaled = scaler.transform(X_test)       # Transform test data with the same scaler
+
 # --- Isolation Forest ---
 iforest = IsolationForest(n_estimators=100, contamination=0.1)
 y_pred_iforest = iforest.fit_predict(X_test)
@@ -84,3 +85,85 @@ print("Local Outlier Factor Classification Report:")
 print(classification_report(y_test, y_pred_lof))
 print("Neural Network Classification Report:")
 print(classification_report(y_test, y_pred_nn))
+
+# Load the dataset (ensure the path is correct)
+data = pd.read_csv('creditcard.csv')  # Replace 'creditcard.csv' with the correct file path
+# Example: Plot histograms for multiple features
+features_to_plot = ['Amount', 'Time']  # Replace with desired feature names
+for feature in features_to_plot:
+    plt.figure(figsize=(8, 6))
+    sns.histplot(data[feature], bins=30, kde=True, color='green')
+    plt.title(f'Distribution of {feature}', fontsize=16)
+    plt.xlabel(feature, fontsize=14)
+    plt.ylabel('Frequency', fontsize=14)
+    plt.grid(axis='y')
+    plt.show()
+
+# Scatter plot for two features
+feature_x = 'Amount'  # Replace with the desired column name (e.g., Amount)
+feature_y = 'Time'    # Replace with the desired column name (e.g., Time)
+
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=data, x=feature_x, y=feature_y, hue='Class', palette='coolwarm', alpha=0.6)
+plt.title(f'Scatter Plot: {feature_x} vs {feature_y}', fontsize=16)
+plt.xlabel(feature_x, fontsize=14)
+plt.ylabel(feature_y, fontsize=14)
+plt.legend(title='Class', loc='upper right', fontsize=10)
+plt.grid(alpha=0.3)
+plt.show()
+
+# Feature to visualize
+feature_to_plot = 'Amount'  # Replace with the desired column name
+hue_feature = 'Class'       # Use 'Class' to differentiate fraud vs. non-fraud
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=data, x=hue_feature, y=feature_to_plot, hue=hue_feature, palette='coolwarm', dodge=False)
+plt.title(f'Box Plot of {feature_to_plot} by {hue_feature}', fontsize=16)
+plt.xlabel(hue_feature, fontsize=14)
+plt.ylabel(feature_to_plot, fontsize=14)
+plt.grid(alpha=0.3)
+plt.legend(title=hue_feature)
+plt.show()
+
+# Select a subset of the dataset for radar chart visualization
+# Choose numerical features and take an average for fraud (Class=1) and non-fraud (Class=0)
+features = ['V1', 'V2', 'V3', 'V4', 'V5']  # Replace with desired numeric features
+data_fraud = data[data['Class'] == 1][features].mean()
+data_non_fraud = data[data['Class'] == 0][features].mean()
+
+# Combine data into a single DataFrame for plotting
+radar_data = pd.DataFrame({'Fraud': data_fraud, 'Non-Fraud': data_non_fraud})
+
+# Normalize the data (optional, to bring values to a similar scale)
+radar_data = (radar_data - radar_data.min()) / (radar_data.max() - radar_data.min())
+
+# Prepare data for radar chart
+categories = list(radar_data.index)
+num_vars = len(categories)
+
+# Create angles for radar chart
+angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+angles += angles[:1]  # Complete the circle
+
+# Radar chart
+fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+
+# Plot for Fraud
+ax.plot(angles, radar_data['Fraud'].tolist() + radar_data['Fraud'].tolist()[:1], label='Fraud', linewidth=2)
+ax.fill(angles, radar_data['Fraud'].tolist() + radar_data['Fraud'].tolist()[:1], alpha=0.25)
+
+# Plot for Non-Fraud
+ax.plot(angles, radar_data['Non-Fraud'].tolist() + radar_data['Non-Fraud'].tolist()[:1], label='Non-Fraud', linewidth=2)
+ax.fill(angles, radar_data['Non-Fraud'].tolist() + radar_data['Non-Fraud'].tolist()[:1], alpha=0.25)
+
+# Add labels and legend
+ax.set_theta_offset(np.pi / 2)
+ax.set_theta_direction(-1)
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(categories)
+ax.set_title('Radar Chart: Fraud vs Non-Fraud', size=16)
+ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
+plt.show()
+
+
+
