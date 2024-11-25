@@ -39,7 +39,7 @@ Fraudulent activities pose significant threats to the financial ecosystem. This 
 ---
 
 ## 📊 **Dataset**
-We used the **Credit Card Fraud Detection Dataset** from [Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).  
+I used the **Credit Card Fraud Detection Dataset** from [Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).  
 ### 📑 **Key Details**:
 - **Rows**: 284,807 transactions  
 - **Fraudulent Transactions**: ~0.17%  
