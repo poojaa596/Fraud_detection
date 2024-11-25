@@ -69,7 +69,14 @@ Results may vary based on dataset preprocessing and hyperparameter tuning.
 | Local Outlier Factor    | 97%          | 25%           | 65%        | 84%         |
 | Deep Learning (ANN)     | 99.9%        | 93%           | 92%        | 99.5%       |
 ## 📊 **Results Visualization**
+The following plots and graphs were used to visualize the data efficiently
+
 ![download](https://github.com/user-attachments/assets/a27d7d7c-89b3-4af6-ba5f-cfbdabc0ac2b)
 ![download](https://github.com/user-attachments/assets/bacf597c-8842-414c-ba1e-85f49f2709e6)
 ![download](https://github.com/user-attachments/assets/adf2de41-acd3-434a-83ac-7c7d30d792ec)
+![download](https://github.com/user-attachments/assets/f82c3e74-e811-48a9-9cfa-677d745a3013)
+![download](https://github.com/user-attachments/assets/eb99c693-bfdf-41f6-8817-1289fd56b35a)
+![download](https://github.com/user-attachments/assets/1525753b-8da4-4869-88e9-82625c72bea6)
+![download](https://github.com/user-attachments/assets/59f91a71-6733-4fde-aa3a-0a458dcf03ca)
+![download](https://github.com/user-attachments/assets/43790e21-70a7-4044-95a1-b1274a4357f8)
 
