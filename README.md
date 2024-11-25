@@ -84,7 +84,9 @@ The following plots and graphs were used to visualize the data efficiently
 ![download](https://github.com/user-attachments/assets/f82c3e74-e811-48a9-9cfa-677d745a3013)
 ### A Plot histograms for multiple features  is displayed here
 
-![download](https://github.com/user-attachments/assets/eb99c693-bfdf-41f6-8817-1289fd56b35a) ### A scatter plot showing the amount vs time is displayed here
+![download](https://github.com/user-attachments/assets/eb99c693-bfdf-41f6-8817-1289fd56b35a) 
+
+### A scatter plot showing the amount vs time is displayed here
 
 ![download](https://github.com/user-attachments/assets/1525753b-8da4-4869-88e9-82625c72bea6)
 ### A box  plot showing the amount by class is displayed here
